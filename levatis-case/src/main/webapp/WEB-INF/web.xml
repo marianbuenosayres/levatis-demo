@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+  <display-name>Guvnor emulation</display-name>
+
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+
+  <servlet>
+    <servlet-name>CXFServlet</servlet-name>
+    <servlet-class>org.apache.cxf.jaxrs.servlet.CXFNonSpringJaxrsServlet</servlet-class>
+    <init-param>
+      <param-name>jaxrs.serviceClasses</param-name>
+      <param-value>com.plugtree.levatis.rest.GuvnorRESTEmulator</param-value>
+    </init-param>
+    <init-param>
+      <param-name>jaxrs.providers</param-name>
+      <param-value>
+        org.apache.cxf.jaxrs.provider.AtomEntryProvider
+        org.apache.cxf.jaxrs.provider.AtomFeedProvider
+      </param-value>
+    </init-param>
+  </servlet>
+  <servlet>
+    <servlet-name>OryxEditorServlet</servlet-name>
+    <servlet-class>com.plugtree.levatis.web.OryxEditorServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>save</servlet-name>
+    <servlet-class>com.plugtree.levatis.web.SaveBPMN2Servlet</servlet-class>
+    <init-param>
+      <description>Edit this to configure where the designer will be hosted</description>
+      <param-name>designer.base.url</param-name>
+      <param-value>http://localhost:8080/designer</param-value>
+    </init-param>
+  </servlet>
+  <servlet>
+    <servlet-name>load</servlet-name>
+    <servlet-class>com.plugtree.levatis.web.LoadBPMN2Servlet</servlet-class>
+  </servlet>
+  <!-- servlet>
+    <servlet-name>StandaloneEditorServlet</servlet-name>
+    <servlet-class>org.drools.guvnor.server.StandaloneEditorServlet</servlet-class>
+  </servlet -->
+  <servlet-mapping>
+    <servlet-name>CXFServlet</servlet-name>
+    <url-pattern>/rest/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>OryxEditorServlet</servlet-name>
+    <url-pattern>/org.drools.guvnor.Guvnor/oryxeditor/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>save</servlet-name>
+    <url-pattern>/save</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>load</servlet-name>
+    <url-pattern>/load</url-pattern>
+  </servlet-mapping>
+  <!-- servlet-mapping>
+    <servlet-name>StandaloneEditorServlet</servlet-name>
+    <url-pattern>/org.drools.guvnor.Guvnor/standaloneEditorServlet/*</url-pattern>
+  </servlet-mapping -->
+  
+  <session-config>
+    <session-timeout>180</session-timeout>
+  </session-config>
+
+</web-app>
